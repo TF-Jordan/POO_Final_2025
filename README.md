@@ -267,12 +267,6 @@ public List<EvenementModel> rechercherEvenementsParType(String type) {
 - [ ] API REST complète
 - [ ] Système de paiement intégré
 
-### Optimisations Techniques
-- [ ] Cache Redis pour les performances
-- [ ] Monitoring et métriques
-- [ ] Documentation OpenAPI/Swagger
-- [ ] Docker containerization
-
 ## 🐛 Problèmes Connus
 
 1. **Initialisation ObjectMapper** : Dans certaines classes, l'ObjectMapper n'est pas initialisé
