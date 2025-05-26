@@ -15,7 +15,7 @@ import java.io.IOException;
 @RequestMapping("/api/participants")
 public class ParticipantControler {
 
-    @PostMapping("/incription")
+    @PostMapping("/inscription")
     public ResponseEntity<?> inscriptionParticipant(@RequestBody ParticipantModel participantModel) throws ParticipantDejaExistantException, IOException {
         System.out.println(participantModel);
         SaveParticipant.getInstance().save(participantModel);
