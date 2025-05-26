@@ -3,8 +3,12 @@ package com.GestionEvenement.GestionEvenement.Services.GestionEvenement;
 
 import com.GestionEvenement.GestionEvenement.Exception.EvenementDejaExistantException;
 import com.GestionEvenement.GestionEvenement.Exception.EvenementNonExistantException;
+import com.GestionEvenement.GestionEvenement.Exception.ParticipantDejaExistantException;
 import com.GestionEvenement.GestionEvenement.Models.EvenementModel;
+import com.GestionEvenement.GestionEvenement.Models.ParticipantModel;
 import com.GestionEvenement.GestionEvenement.Repository.Classes.EvenementRepository.EvenementRepository;
+import com.GestionEvenement.GestionEvenement.Repository.Classes.load.LoadParticipant;
+import com.GestionEvenement.GestionEvenement.Repository.Classes.save.SaveParticipant;
 import com.GestionEvenement.GestionEvenement.Services.Notification.EmailNotificationService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +54,29 @@ public class GestionEvenement {  //singleton
     public void supprimerEvenement(String id) throws EvenementNonExistantException {
         if (!evenements.containsKey(id)) {
             throw new EvenementNonExistantException("Cet événement n'existe pas !");
+        }
+
+        EvenementModel evenement = evenements.get(id);
+        evenements.remove(id);
+        evenementRepository.delete(id);
+        log.info("Événement supprimé: {}", evenement.getNom());
+    }
+    public void supprimerParticipant(String id) throws EvenementNonExistantException, ParticipantDejaExistantException {
+        List<ParticipantModel> participants=LoadParticipant.getInstance().load();
+        Map<String ,ParticipantModel> p=participants.stream().collect(Collectors.toMap(ParticipantModel::getId, obj->obj));
+        if(!p.containsKey(id)){
+            throw new EvenementNonExistantException("Ce participant n'existe pas");
+        }else {
+            p.remove(id);
+            p.forEach((key,value)-> {
+                try {
+                    SaveParticipant.getInstance().save(value);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ParticipantDejaExistantException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
 
         EvenementModel evenement = evenements.get(id);

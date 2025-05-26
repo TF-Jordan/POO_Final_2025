@@ -3,11 +3,9 @@ package com.GestionEvenement.GestionEvenement.controller;
 import com.GestionEvenement.GestionEvenement.Exception.ParticipantDejaExistantException;
 import com.GestionEvenement.GestionEvenement.Models.ParticipantModel;
 import com.GestionEvenement.GestionEvenement.Repository.Classes.save.SaveParticipant;
+import com.GestionEvenement.GestionEvenement.Services.GestionEvenement.GestionEvenement;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -20,5 +18,11 @@ public class ParticipantControler {
         System.out.println(participantModel);
         SaveParticipant.getInstance().save(participantModel);
         return ResponseEntity.ok("gevs");
+    }
+
+    @DeleteMapping("/desinscription")
+    public ResponseEntity<?> desinscrireParticipant(@RequestBody String id) throws ParticipantDejaExistantException {
+        GestionEvenement.getInstance().supprimerParticipant(id);
+        return ResponseEntity.ok("Participant Suprimé avec succes");
     }
 }

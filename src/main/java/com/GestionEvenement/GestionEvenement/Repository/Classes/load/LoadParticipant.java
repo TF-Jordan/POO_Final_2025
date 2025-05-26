@@ -2,6 +2,7 @@ package com.GestionEvenement.GestionEvenement.Repository.Classes.load;
 
 
 import com.GestionEvenement.GestionEvenement.Models.ParticipantModel;
+import com.GestionEvenement.GestionEvenement.Repository.Classes.save.SaveEvtModif;
 import com.GestionEvenement.GestionEvenement.Repository.Interfaces.Deserialisation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadParticipant  implements Deserialisation<ParticipantModel> {
-    private LoadParticipant instance;
+    private static LoadParticipant instance;
     private ObjectMapper mapper;
     private final File fichier=new File("data/Participants.json");
 
@@ -28,5 +29,11 @@ public class LoadParticipant  implements Deserialisation<ParticipantModel> {
             e.printStackTrace();
         }
         return ls;
+    }
+    public static synchronized LoadParticipant getInstance() {
+        if (instance == null) {
+            instance = new LoadParticipant();
+        }
+        return instance;
     }
 }
