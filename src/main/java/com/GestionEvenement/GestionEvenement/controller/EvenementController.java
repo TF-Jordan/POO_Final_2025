@@ -17,14 +17,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evenements")
-@CrossOrigin(origins = "*")
 @Slf4j
 public class EvenementController {
 
     @Autowired
     private GestionEvenement gestionEvenement;
 
-    @PostMapping
+    @PostMapping("/creer")
     public ResponseEntity<?> creerEvenement(@RequestBody EvenementModel evenement) {
         try {
             gestionEvenement.ajouterEvenement(evenement);
@@ -34,7 +33,7 @@ public class EvenementController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/obtenirTous")
     public ResponseEntity<List<EvenementModel>> obtenirTousLesEvenements() {
         return ResponseEntity.ok(gestionEvenement.obtenirTousLesEvenements());
     }
