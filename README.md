@@ -295,6 +295,5 @@ Projet académique - Tous droits réservés.
 
 ---
 
-**Auteur** : [Votre Nom]  
-**Date** : Mai 2025  
-**Version** : 1.0.0
+**Auteur** : Toulepi Jordan
+**Date** : Mai 2025
